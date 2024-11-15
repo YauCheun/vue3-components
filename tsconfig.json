@@ -3,7 +3,7 @@
     "target": "ES6", //es6版本                          
     "module": "ESNext",                               //打包模块类型
     "declaration" : false,                  //默认不要声明文件
-    "noImplicitAny": false, //支持类型不标注可以默认any
+    "noImplicitAny": true, //支持类型不标注可以默认any
     "removeComments": true, //删除注释
     "moduleResolution": "node", //按照node模块解析
     "esModuleInterop": true, //支持es5,commomjs模块
