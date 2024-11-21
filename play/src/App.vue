@@ -39,7 +39,7 @@ const data = ref(buildTree(data1));
   <z-icon :color="'yellow'" :size="20">
     <AccessibilitySharp></AccessibilitySharp>
   </z-icon>
-  <z-tree :data="data" label-field="label" key-field="key" children-field="children"></z-tree>
+  <z-tree :data="data" :default-expanded-keys="[2]" label-field="label" key-field="key" children-field="children"></z-tree>
 </template>
 
 <style scoped></style>
