@@ -29,7 +29,7 @@ function createTreeOptions(key: string, label: string, children: string) {
 }
 
 const treeOptions = createTreeOptions(props.keyField, props.labelField, props.childrenField)
-function createTree(data: TreeOption[]): any {
+function createTree(data: TreeOption[]): TreeNode[] {
   function traversal(data: TreeOption[], parent: TreeNode | null = null) {
     return data.map(node => {
       const children = treeOptions.getChildren(node) || []
@@ -62,13 +62,40 @@ watch(() => props.data, (data: TreeOption[]) => {
 //将树节点拍平，点击实现展开操作
 
 //需要展开的key
-const expandedkeysSet = ref(new Set([props.defaultExpandedKeys]))
+const expandedkeysSet = ref(new Set(props.defaultExpandedKeys))
 
 
 const flattenTree = computed(() => {
 
-  let expandedKeys = expandedkeysSet.value
-  let flattenNodes: TreeNode[] = [] // 拍平后的结果
-  return []
+  const expandedKeys = expandedkeysSet.value
+  const flattenNodes: TreeNode[] = [] // 拍平后的结果
+
+  const nodes = tree.value || []  // 被格式化后的节点
+
+  const stack: TreeNode[] = [] //用于遍历树的栈
+
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    stack.push(nodes[i])
+  }
+  // 深度遍历
+  while (stack.length) {
+    // 倒转后取取出栈顶元素
+    const node = stack.pop()
+    if (!node) continue
+    flattenNodes.push(node)
+    if (expandedKeys.has(node.key)) {
+      const children = node.children
+      if (children) {
+        for (let i = node.children.length - 1; i >= 0; i--) {
+          // 放到栈顶中，保证先遍历子节点
+          stack.push(children[i])
+        }
+      }
+    }
+
+  }
+  return flattenNodes
 })
+
+console.log(flattenTree.value)
 </script>
