@@ -2,7 +2,7 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-07 08:23:39
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-11-22 08:14:30
+ * @LastEditTime: 2024-11-28 08:19:31
  * @FilePath: \vue3-components\play\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -39,7 +39,7 @@ const data = ref(buildTree(data1));
   <z-icon :color="'yellow'" :size="20">
     <AccessibilitySharp></AccessibilitySharp>
   </z-icon>
-  <z-tree :data="data" :default-expanded-keys="[]" label-field="label" key-field="key" children-field="children"></z-tree>
+  <z-tree :data="data" :default-expanded-keys="[1]" label-field="label" key-field="key" children-field="children"></z-tree>
 </template>
 
 <style scoped></style>
