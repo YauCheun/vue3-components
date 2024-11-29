@@ -51,6 +51,7 @@ export const treeProps = {
 export const treeNodeProps = {
   node:{
     type: Object as PropType<TreeNode>,
+    default: ()=>({} as TreeNode),
     required: true
   },
   expanded:{
@@ -58,5 +59,11 @@ export const treeNodeProps = {
     required: true
   }
 }
+
+export const treeNodeEmits = {
+  'toggle': (node: TreeNode) => !!node,
+}
+
+export type TreeNodeEmits = typeof treeNodeEmits;
 export type TreeNodeProps = Partial<ExtractPropTypes<typeof treeNodeProps>>;
 export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>;

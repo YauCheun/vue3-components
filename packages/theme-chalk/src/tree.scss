@@ -9,14 +9,22 @@
   &:hover {
     background-color: rgb(195, 195, 234);
   }
+  @include e(content){
+    display: flex;
+    align-items: center;
+  }
   @include e(expand-icon){
-    display: inline-block;
+    display: inline-flex;
     vertical-align: middle;
     transform: rotate(0deg);
     transition: transform .2s ease-in;
     cursor: pointer;
     &.expanded{
       transform: rotate(90deg);
+    }
+    @include is(leaf){
+      opacity: 0;
+      cursor: default;
     }
   }
 }
