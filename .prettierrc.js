@@ -11,6 +11,6 @@ module.export = {
   trailingComma: 'none',  //末尾逗号
   semi: false, //使用分号
   arrowParens: 'avoid', //箭头函数括号
-  endOfLine: 'auto', //结尾自动换行
-  tabWidth: 2,
+  // endOfLine: 'auto', //结尾自动换行
+  tabWidth: 2
 }

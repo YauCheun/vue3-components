@@ -2,13 +2,14 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-07 08:23:39
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-11-28 08:19:31
+ * @LastEditTime: 2024-12-04 08:12:05
  * @FilePath: \vue3-components\play\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 
 <script setup lang="ts">
 import { AccessibilitySharp } from "@vicons/ionicons5";
+import { TreeOption } from "@vue-components/components/tree/src/tree";
 import { ref } from "vue";
 
 function buildTree(data: any[], parentKey = null): any {
@@ -30,7 +31,19 @@ const data1 = [
   { key: 5, label: 'Child 2-1', parentKey: 4 },
   { key: 6, label: 'Grandchild 1-2-1', parentKey: 3 }
 ];
+// 示例数据
+const data2 = [
+  { key: 1, label: 'Root 1', isLeaf: false },
+  { key: 2, label: 'Root 2',  isLeaf: false},
+];
 
+const handleLoad = (node:TreeOption):Promise<TreeOption[]>=>{
+  return new Promise((resolve)=>{
+    setTimeout(()=>{
+      resolve([{key:Date.now(),label:node.label+'Child 1-1',isLeaf: false}])
+    },1000)
+  })
+}
 // 构建树
 const data = ref(buildTree(data1));
 </script>
@@ -39,7 +52,7 @@ const data = ref(buildTree(data1));
   <z-icon :color="'yellow'" :size="20">
     <AccessibilitySharp></AccessibilitySharp>
   </z-icon>
-  <z-tree :data="data" :default-expanded-keys="[1]" label-field="label" key-field="key" children-field="children"></z-tree>
+  <z-tree :data="data2" label-field="label" key-field="key" children-field="children" :on-load="handleLoad"></z-tree>
 </template>
 
 <style scoped></style>
