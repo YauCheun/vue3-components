@@ -2,7 +2,7 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-20 08:01:32
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-12-05 08:06:41
+ * @LastEditTime: 2024-12-07 09:53:35
  * @FilePath: \vue3-components\packages\components\tree\src\tree.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -47,6 +47,18 @@ export const treeProps = {
     default: () => []
   },
   onLoad: Function as PropType<(node: TreeOption) => Promise<TreeOption[]>>,
+  selectedKey:{
+    type: Array as PropType<Key[]>,
+    default: () => []
+  },
+  selectable:{
+    type: Boolean,
+    default: true
+  },
+  multiple:{
+    type: Boolean,
+    default: false
+  }
 } as const;
 
 export const treeNodeProps = {
@@ -62,10 +74,18 @@ export const treeNodeProps = {
   loadingKeys:{
     type: Object as PropType<Set<Key>>
   },
+  selectedkeys:{
+    type: Array as PropType<Key[]>,
+    default: () => []
+  },
 }
 
 export const treeNodeEmits = {
-  'toggle': (node: TreeNode) => !!node,
+  'toggle': (node: TreeNode) => node,
+  'select': (node: TreeNode) => node,
+}
+export const treeEmits = {
+  'update:selectedKey': (keys: Key[]) => keys
 }
 
 export type TreeNodeEmits = typeof treeNodeEmits;

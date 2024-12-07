@@ -12,6 +12,9 @@
   @include e(content){
     display: flex;
     align-items: center;
+    @include is(selected){
+      background-color: aqua;
+    }
   }
   @include e(expand-icon){
     display: inline-flex;
@@ -27,4 +30,5 @@
       cursor: default;
     }
   }
+
 }

@@ -2,7 +2,7 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-20 08:01:43
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-12-05 08:03:38
+ * @LastEditTime: 2024-12-07 09:53:14
  * @FilePath: \vue3-components\packages\components\tree\src\tree.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,14 +16,16 @@
       :node="node"
       :expanded="isExpanded(node)"
       :loading-keys="loadingkeysRef"
+      :selectedkeys="selectKeysRef"
       @toggle="toggleExpanded"
+      @select="handleSelect"
     ></z-tree-node>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref, watch } from "vue";
-import { Key, TreeNode, TreeOption, treeProps } from "./tree";
+import { Key, TreeNode, TreeOption, treeEmits, treeProps } from "./tree";
 import { createNamespace } from "@vue-components/utils/create";
 import ZTreeNode from "./treeNode.vue";
 const bem = createNamespace("tree");
@@ -53,7 +55,7 @@ const treeOptions = createTreeOptions(
   props.labelField,
   props.childrenField
 );
-// 2.
+// 2.格式化 数据
 function createTree(
   data: TreeOption[],
   parent: TreeNode | null = null
@@ -157,7 +159,7 @@ function expand(node: TreeNode) {
 function collapse(node: TreeNode) {
   expandedkeysSet.value.delete(node.key);
 }
-//展开收起
+//4.用户展开收起
 function toggleExpanded(node: TreeNode) {
   if (node.isLeaf) return;
   const expandedKeys = expandedkeysSet.value;
@@ -166,6 +168,41 @@ function toggleExpanded(node: TreeNode) {
   } else {
     expand(node);
   }
+}
+
+//5.实现选中节点
+const emits = defineEmits(treeEmits);
+
+const selectKeysRef = ref<Key[]>([]);
+watch(
+  () => props.selectedKey,
+  (value: Key[]) => {
+    selectKeysRef.value = value;
+    console.log("watch", value)
+  },
+  { immediate: true }
+);
+//处理选中的节点
+function handleSelect(node: TreeNode) {
+  console.log("handleSelect", node);
+  let selectKeys = Array.from(selectKeysRef.value);
+  if (!props.selectable) return; // 不呢选直接返回
+
+  if (props.multiple) {
+    const index = selectKeys.findIndex((key) => key === node.key);
+    if (index === -1) {
+      selectKeys.push(node.key);
+    } else {
+      selectKeys.splice(index, 1);
+    }
+  } else {
+    if (selectKeys.includes(node.key)) {
+      selectKeys = [];
+    } else {
+      selectKeys = [node.key];
+    }
+  }
+  emits("update:selectedKey", selectKeys);
 }
 console.log(flattenTree.value);
 </script>
