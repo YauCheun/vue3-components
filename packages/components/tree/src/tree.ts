@@ -2,11 +2,11 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-20 08:01:32
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-12-07 09:53:35
+ * @LastEditTime: 2024-12-07 10:18:38
  * @FilePath: \vue3-components\packages\components\tree\src\tree.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import { ExtractPropTypes, PropType } from "vue";
+import { ExtractPropTypes, InjectionKey, PropType, SetupContext } from "vue";
 
 export type Key = string | number;
 
@@ -23,6 +23,7 @@ export interface TreeOption {
   key?: Key;
   children?: TreeOption[];
   isLeaf: boolean;
+  disabled?: boolean;
   [key: string]: unknown;
 }
 export const treeProps = {
@@ -91,3 +92,17 @@ export const treeEmits = {
 export type TreeNodeEmits = typeof treeNodeEmits;
 export type TreeNodeProps = Partial<ExtractPropTypes<typeof treeNodeProps>>;
 export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>;
+
+
+export interface TreeContext {
+  slots: SetupContext['slots'];
+  // emits: SetupContext<typeof treeEmits>['emit'];
+}
+//此变量作为提供出去的属性上下文
+export const treeInjectKey: InjectionKey<TreeContext> = Symbol('treeContext')
+export const treeNodeContentProps = {
+  node:{
+    type: Object as PropType<TreeNode>,
+    required: true
+  }
+}

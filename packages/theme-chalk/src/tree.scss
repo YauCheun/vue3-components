@@ -15,6 +15,9 @@
     @include is(selected){
       background-color: aqua;
     }
+    @include is(disabled){
+      opacity: .3;
+    }
   }
   @include e(expand-icon){
     display: inline-flex;

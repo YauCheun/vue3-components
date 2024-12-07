@@ -2,7 +2,7 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-20 08:01:43
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-12-07 09:53:14
+ * @LastEditTime: 2024-12-07 10:24:09
  * @FilePath: \vue3-components\packages\components\tree\src\tree.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -24,8 +24,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from "vue";
-import { Key, TreeNode, TreeOption, treeEmits, treeProps } from "./tree";
+import { computed, ref, watch,provide,useSlots } from "vue";
+import { Key, TreeNode, TreeOption, treeEmits, treeProps,treeInjectKey } from "./tree";
 import { createNamespace } from "@vue-components/utils/create";
 import ZTreeNode from "./treeNode.vue";
 const bem = createNamespace("tree");
@@ -68,6 +68,7 @@ function createTree(
         label: treeOptions.getLabel(node),
         children: [], //默认为空
         rawNode: node,
+        disabled: !!node.disabled,
         level: parent ? parent.level + 1 : 0,
         // 判断节点是否自带isleaf，自带了以自带的为准，没自带就判断是否有children，没有的话就默认为叶子节点
         isLeaf: node.isLeaf ?? children.length == 0,
@@ -204,5 +205,9 @@ function handleSelect(node: TreeNode) {
   }
   emits("update:selectedKey", selectKeys);
 }
+
+provide(treeInjectKey, {
+  slots: useSlots()
+})
 console.log(flattenTree.value);
 </script>
