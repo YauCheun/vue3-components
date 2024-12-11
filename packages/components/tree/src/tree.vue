@@ -2,7 +2,7 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-20 08:01:43
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-12-07 10:24:09
+ * @LastEditTime: 2024-12-10 08:24:07
  * @FilePath: \vue3-components\packages\components\tree\src\tree.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -10,24 +10,36 @@
 <template>
   <div :class="bem.b()">
     <!-- 模板有自带的优化，如果是自定义比较强的采用 tsx 来写 -->
-    <z-tree-node
-      v-for="node in flattenTree"
-      :key="node.key"
-      :node="node"
-      :expanded="isExpanded(node)"
-      :loading-keys="loadingkeysRef"
-      :selectedkeys="selectKeysRef"
-      @toggle="toggleExpanded"
-      @select="handleSelect"
-    ></z-tree-node>
+    <z-virtual-list :items="flattenTree">
+      <template #default="{ node }">
+        <z-tree-node
+          :key="node.key"
+          :node="node"
+          :expanded="isExpanded(node)"
+          :loading-keys="loadingkeysRef"
+          :selectedkeys="selectKeysRef"
+          @toggle="toggleExpanded"
+          @select="handleSelect"
+        >
+        </z-tree-node>
+      </template>
+    </z-virtual-list>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch,provide,useSlots } from "vue";
-import { Key, TreeNode, TreeOption, treeEmits, treeProps,treeInjectKey } from "./tree";
+import { computed, ref, watch, provide, useSlots } from "vue";
+import {
+  Key,
+  TreeNode,
+  TreeOption,
+  treeEmits,
+  treeProps,
+  treeInjectKey,
+} from "./tree";
 import { createNamespace } from "@vue-components/utils/create";
 import ZTreeNode from "./treeNode.vue";
+import ZVirtualList from '@vue-components/components/virtual-list'
 const bem = createNamespace("tree");
 
 defineOptions({ name: "z-tree" });
@@ -179,7 +191,7 @@ watch(
   () => props.selectedKey,
   (value: Key[]) => {
     selectKeysRef.value = value;
-    console.log("watch", value)
+    console.log("watch", value);
   },
   { immediate: true }
 );
@@ -207,7 +219,7 @@ function handleSelect(node: TreeNode) {
 }
 
 provide(treeInjectKey, {
-  slots: useSlots()
-})
+  slots: useSlots(),
+});
 console.log(flattenTree.value);
 </script>

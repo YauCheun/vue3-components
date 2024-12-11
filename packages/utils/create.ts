@@ -2,7 +2,7 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-14 07:58:55
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-11-15 08:39:12
+ * @LastEditTime: 2024-12-10 08:15:14
  * @FilePath: \vue3-components\packages\utils\create.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -25,13 +25,13 @@ function _bem(prefixName: string, blockSuffix: string, element: string, modifier
   return prefixName
 }
 function createBEM(prefixName: string) {
-  const b = (blockSuffix: string = '') => _bem(prefixName, blockSuffix, '', '')
-  const e = (element: string = '') => element ? _bem(prefixName, '', element, '') : ''
-  const m = (modifier: string = '') => modifier ? _bem(prefixName, '', '', modifier) : ''
-  const be = (blockSuffix: string = '', element: string = '') => blockSuffix && element ? _bem(prefixName, blockSuffix, '', '') : ''
-  const bm = (blockSuffix: string = '', modifier: string = '') => blockSuffix && modifier ? _bem(prefixName, blockSuffix, '', modifier) : ''
-  const em = (element: string = '', modifier: string = '') => element && modifier ? _bem(prefixName, '', element, modifier) : ''
-  const bem = (blockSuffix: string = '', element: string = '', modifier: string = '') => blockSuffix && element && modifier ? _bem(prefixName, blockSuffix, element, modifier) : ""
+  const b = (blockSuffix = '') => _bem(prefixName, blockSuffix, '', '')
+  const e = (element = '') => element ? _bem(prefixName, '', element, '') : ''
+  const m = (modifier = '') => modifier ? _bem(prefixName, '', '', modifier) : ''
+  const be = (blockSuffix = '', element = '') => blockSuffix && element ? _bem(prefixName, blockSuffix, '', '') : ''
+  const bm = (blockSuffix = '', modifier = '') => blockSuffix && modifier ? _bem(prefixName, blockSuffix, '', modifier) : ''
+  const em = (element = '', modifier = '') => element && modifier ? _bem(prefixName, '', element, modifier) : ''
+  const bem = (blockSuffix = '', element = '', modifier = '') => blockSuffix && element && modifier ? _bem(prefixName, blockSuffix, element, modifier) : ""
   const is = (name:string,state:any)=>(state ? `is-${name}` : '')
   return {
     b,

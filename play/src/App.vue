@@ -2,7 +2,7 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-07 08:23:39
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-12-07 10:36:45
+ * @LastEditTime: 2024-12-10 07:50:08
  * @FilePath: \vue3-components\play\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -36,7 +36,34 @@ const data2 = [
   { key: 1, label: "Root 1", isLeaf: false },
   { key: 2, label: "Root 2", isLeaf: false },
 ];
-
+const data3  = creatData()
+function creatData(level = 4, parentKey = ''): TreeOption[] {
+  if (!level) return []
+  const arr = new Array(20 - level).fill(0)
+  return arr.map((_, index: number) => {
+    const key = parentKey + level + index
+    return {
+      isLeaf: level === 1,
+      label: creatLabel(level),
+      key,
+      children: creatData(level - 1, key)
+    }
+  })
+}
+function creatLabel(level: number): string {
+  if (level === 4) return '道生一'
+  if (level === 3) return '一生二'
+  if (level === 2) return '二生三'
+  if (level === 1) return '三生万物'
+  return ''
+}
+function nextLabel(currentLabel?: string | number): string {
+  if (!currentLabel) return '道生一'
+  if (currentLabel === '道生一') return '一生二'
+  if (currentLabel === '一生二') return '二生三'
+  if (currentLabel === '二生三') return '三生万物'
+  return ''
+}
 const handleLoad = (node: TreeOption): Promise<TreeOption[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -69,7 +96,7 @@ watch(
   </z-icon>
   <z-tree
     v-model:selected-key="selectValue"
-    :data="data"
+    :data="data3"
     label-field="label"
     key-field="key"
     children-field="children"
