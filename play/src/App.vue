@@ -2,13 +2,13 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-07 08:23:39
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-12-10 07:50:08
+ * @LastEditTime: 2024-12-13 08:02:29
  * @FilePath: \vue3-components\play\src\App.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 
 <script setup lang="ts">
-import { AccessibilitySharp } from "@vicons/ionicons5";
+import { AccessibilitySharp, TrainOutline } from "@vicons/ionicons5";
 import { Key, TreeOption } from "@vue-components/components/tree/src/tree";
 import { ref, watch } from "vue";
 
@@ -36,33 +36,33 @@ const data2 = [
   { key: 1, label: "Root 1", isLeaf: false },
   { key: 2, label: "Root 2", isLeaf: false },
 ];
-const data3  = creatData()
-function creatData(level = 4, parentKey = ''): TreeOption[] {
-  if (!level) return []
-  const arr = new Array(20 - level).fill(0)
+const data3 = creatData();
+function creatData(level = 4, parentKey = ""): TreeOption[] {
+  if (!level) return [];
+  const arr = new Array(20 - level).fill(0);
   return arr.map((_, index: number) => {
-    const key = parentKey + level + index
+    const key = parentKey + level + index;
     return {
       isLeaf: level === 1,
       label: creatLabel(level),
       key,
-      children: creatData(level - 1, key)
-    }
-  })
+      children: creatData(level - 1, key),
+    };
+  });
 }
 function creatLabel(level: number): string {
-  if (level === 4) return '道生一'
-  if (level === 3) return '一生二'
-  if (level === 2) return '二生三'
-  if (level === 1) return '三生万物'
-  return ''
+  if (level === 4) return "道生一";
+  if (level === 3) return "一生二";
+  if (level === 2) return "二生三";
+  if (level === 1) return "三生万物";
+  return "";
 }
 function nextLabel(currentLabel?: string | number): string {
-  if (!currentLabel) return '道生一'
-  if (currentLabel === '道生一') return '一生二'
-  if (currentLabel === '一生二') return '二生三'
-  if (currentLabel === '二生三') return '三生万物'
-  return ''
+  if (!currentLabel) return "道生一";
+  if (currentLabel === "道生一") return "一生二";
+  if (currentLabel === "一生二") return "二生三";
+  if (currentLabel === "二生三") return "三生万物";
+  return "";
 }
 const handleLoad = (node: TreeOption): Promise<TreeOption[]> => {
   return new Promise((resolve) => {
@@ -88,6 +88,8 @@ watch(
     console.log(111, val);
   }
 );
+
+const check = ref(true);
 </script>
 
 <template>
@@ -105,10 +107,19 @@ watch(
     multiple
   >
     <template #default="{ node }">
-      {{ node.key+node.label }}
+      {{ node.key + node.label }}
     </template>
   </z-tree>
   <!-- selectable 可选节点  multiple 可多选节点  select-kes 选中后的节点 -->
+
+  <z-checkbox
+    v-model="check"
+    :indeterminate="true"
+    label="默认选中"
+    @change="(value) => console.log(value)"
+  >
+    节点
+  </z-checkbox>
 </template>
 
 <style scoped></style>
