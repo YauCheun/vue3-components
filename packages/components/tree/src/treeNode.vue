@@ -38,7 +38,13 @@
           <Switcher v-else></Switcher>
         </z-icon>
       </span>
-      <z-checkbox v-if="showCheckbox" :model-value="checked" :disabled="disabled" :indeterminate="indeterminate"></z-checkbox>
+      <z-checkbox
+        v-if="showCheckbox"
+        :model-value="checked"
+        :disabled="disabled"
+        :indeterminate="indeterminate"
+        @change="handleChecked"
+      ></z-checkbox>
       <span @click="handleSelected">
         <ZTreeContent :node="node"></ZTreeContent>
       </span>
@@ -52,7 +58,7 @@ import { treeNodeEmits, treeNodeProps } from "./tree";
 import Switcher from "./icon/Switcher";
 import Loading from "./icon/Loading";
 import { computed } from "vue";
-import ZTreeContent from './tree-node-content'
+import ZTreeContent from "./tree-node-content";
 import ZCheckbox from "@vue-components/components/checkbox";
 const bem = createNamespace("tree-node");
 const props = defineProps(treeNodeProps);
@@ -69,4 +75,7 @@ const handleSelected = () => {
   if (props.node.disabled) return;
   emits("select", props.node);
 };
+const handleChecked =(val:boolean)=>{
+  emits('check',props.node,val)
+}
 </script>

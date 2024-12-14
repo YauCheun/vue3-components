@@ -2,7 +2,7 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-20 08:01:32
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-12-14 15:27:55
+ * @LastEditTime: 2024-12-14 16:22:45
  * @FilePath: \vue3-components\packages\components\tree\src\tree.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -15,6 +15,7 @@ export interface TreeNode extends Required<TreeOption> {
   rawNode: TreeOption;
   children: TreeNode[];
   isLeaf: boolean;
+  parentKey: Key | undefined;
 }
 
 export interface TreeOption {
@@ -107,6 +108,7 @@ export const treeNodeProps = {
 export const treeNodeEmits = {
   toggle: (node: TreeNode) => node,
   select: (node: TreeNode) => node,
+  check: (node: TreeNode, val: boolean) => typeof val === "boolean",
 };
 export const treeEmits = {
   "update:selectedKey": (keys: Key[]) => keys,
