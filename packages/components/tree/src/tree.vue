@@ -2,7 +2,7 @@
  * @Author: YauCheun 1272125039@qq.com
  * @Date: 2024-11-20 08:01:43
  * @LastEditors: YauCheun 1272125039@qq.com
- * @LastEditTime: 2024-12-10 08:24:07
+ * @LastEditTime: 2024-12-14 10:46:07
  * @FilePath: \vue3-components\packages\components\tree\src\tree.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -18,6 +18,10 @@
           :expanded="isExpanded(node)"
           :loading-keys="loadingkeysRef"
           :selectedkeys="selectKeysRef"
+          :show-checkbox="showCheckbox"
+          :checked="isChecked(node)"
+          :disabled="isDisabled(node)"
+          :indeterminate="isIndetermiate(node)"
           @toggle="toggleExpanded"
           @select="handleSelect"
         >
@@ -39,7 +43,7 @@ import {
 } from "./tree";
 import { createNamespace } from "@vue-components/utils/create";
 import ZTreeNode from "./treeNode.vue";
-import ZVirtualList from '@vue-components/components/virtual-list'
+import ZVirtualList from "@vue-components/components/virtual-list";
 const bem = createNamespace("tree");
 
 defineOptions({ name: "z-tree" });
@@ -221,5 +225,19 @@ function handleSelect(node: TreeNode) {
 provide(treeInjectKey, {
   slots: useSlots(),
 });
+
+const checkedKeysRef = ref(new Set(props.defaultCheckedKeys));
+
+const isChecked = (node: TreeNode) => {
+  return checkedKeysRef.value.has(node.key);
+};
+const isDisabled = (node: TreeNode) => {
+  return !!node.disabled;
+};
+const indeterminateRefs = ref<Set<Key>>(new Set());
+
+const isIndetermiate = (node: TreeNode) => {
+  return true;
+};
 console.log(flattenTree.value);
 </script>
