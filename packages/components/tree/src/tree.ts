@@ -117,7 +117,7 @@ export const treeEmits = {
 export type TreeNodeEmits = typeof treeNodeEmits;
 export type TreeNodeProps = Partial<ExtractPropTypes<typeof treeNodeProps>>;
 export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>;
-
+export type TreeEmits = typeof treeEmits
 export interface TreeContext {
   slots: SetupContext["slots"];
   // emits: SetupContext<typeof treeEmits>['emit'];
